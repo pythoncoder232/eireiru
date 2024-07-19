@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .item {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .loading {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content" id="content">
+        <!-- Initial content goes here -->
+    </div>
+    <div class="loading" id="loading">Loading...</div>
+
+    <script>
+        let content = document.getElementById('content');
+        let loading = document.getElementById('loading');
+        let isLoading = false;
+
+        function loadMoreContent() {
+            if (isLoading) return;
+            isLoading = true;
+            loading.style.display = 'block';
+
+            // Simulate an API call to fetch more content
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                    let item = document.createElement('div');
+                    item.className = 'item';
+                    item.textContent = 'keep scrolling... ' + (content.children.length + 1);
+                    content.appendChild(item);
+                }
+                isLoading = false;
+                loading.style.display = 'none';
+            }, 1000);
+        }
+
+        // Initial load
+        loadMoreContent();
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                loadMoreContent();
+            }
+        });
+    </script>
+</body>
+</html>
